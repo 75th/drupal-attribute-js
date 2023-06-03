@@ -81,6 +81,10 @@ export default class Attributes {
       get(target, propertyName) {
         const property = target[propertyName];
         return (typeof property === 'function') ? property.bind(target) : target.getAttribute(propertyName);
+      },
+      deleteProperty(target, propertyName) {
+        const property = target[propertyName];
+        return (typeof property === 'function') ? delete(target[propertyName]) : target.setAttribute(propertyName, '');
       }
     });
 
@@ -172,6 +176,11 @@ export default class Attributes {
           break;
       }
 
+      if (oldValues.filter(v => v).length === 0) {
+        self.#attributes.delete(attr);
+        return;
+      }
+
       self.#attributes.set(
         attr,
         oldValues.filter((value, index, oldValues) => {
@@ -179,14 +188,6 @@ export default class Attributes {
         })
       );
     });
-
-    for (let i = 0; i < newValues.length; i++) {
-      let value = newValues[i];
-
-      if (typeof value !== 'string') {
-        continue;
-      }
-    }
   }
 
   addClass(classes) {

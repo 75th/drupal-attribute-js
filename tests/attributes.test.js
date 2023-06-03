@@ -11,7 +11,7 @@ test(
     attributes = new Attributes({ selected: true, checked: false })
     expect(attributes.selected).toBe(true);
     expect(attributes.checked).toBe(false);
-    expect(String(attributes)).toEqual(' selected');
+    expect(attributes.toString()).toEqual(' selected');
 
     attributes = new Attributes({ class: 'example-class' });
     expect(!!attributes.class).toBe(true);
@@ -29,5 +29,23 @@ test(
     attributes.class = 'example-class';
     expect(!!attributes.class).toBe(true);
     expect(attributes.class).toEqual(['example-class']);
+  }
+)
+
+test(
+  'Tests adding new values to an existing part of the attribute.',
+  () => {
+    let attributes = new Attributes({class: ['example-class']});
+    attributes.class.push('other-class');
+    expect(attributes.class).toEqual(['example-class', 'other-class']);
+  }
+)
+
+test(
+  'Tests removing of values.',
+  () => {
+    let attributes = new Attributes({class: ['example-class']});
+    delete attributes.class;
+    expect(typeof attributes.class).toEqual('undefined');
   }
 )
