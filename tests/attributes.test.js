@@ -11,7 +11,7 @@ test(
     attributes = new Attributes({ selected: true, checked: false })
     expect(attributes.selected).toBe(true);
     expect(attributes.checked).toBe(false);
-    expect(attributes.toString()).toBe(' selected');
+    expect(String(attributes)).toEqual(' selected');
 
     attributes = new Attributes({ class: 'example-class' });
     expect(!!attributes.class).toBe(true);

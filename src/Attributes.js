@@ -78,8 +78,9 @@ export default class Attributes {
         target.setAttribute(property, value);
         return true;
       },
-      get(target, property) {
-        return target.getAttribute(property);
+      get(target, propertyName) {
+        const property = target[propertyName];
+        return (typeof property === 'function') ? property.bind(target) : target.getAttribute(propertyName);
       }
     });
 
@@ -111,6 +112,10 @@ export default class Attributes {
   }
 
   #parseBooleanValue(value) {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+
     if (!value || value.toLowerCase() === 'false') {
       return false;
     }
